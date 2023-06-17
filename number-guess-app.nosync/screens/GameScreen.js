@@ -60,10 +60,10 @@ function GameScreen({ userChoice, onGameOver }) {
         </InstructionText>
         <View style={styles.buttonsContainer}>
           <PrimaryButton onPress={nextGuessHandler.bind(null, "lower")}>
-            <Ionicons name="md-remove" size={24} color={"White"}/>
+            <Ionicons name="md-remove" size={24} color={"#fff"}/>
           </PrimaryButton>
           <PrimaryButton onPress={nextGuessHandler.bind(null, "greater")}>
-            <Ionicons name="md-add" size={24} color={"White"}/>
+            <Ionicons name="md-add" size={24} color={"#fff"}/>
           </PrimaryButton>
         </View>
       </Card>
