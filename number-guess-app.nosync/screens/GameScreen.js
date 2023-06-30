@@ -1,4 +1,4 @@
-import { Alert, StyleSheet, View } from "react-native";
+import { Alert, FlatList, StyleSheet, Text, View } from "react-native";
 import Title from "../components/ui/Title";
 import { useEffect, useState } from "react";
 import NumberContainer from "../components/game/NumberContainer";
@@ -23,12 +23,18 @@ let max = 100;
 function GameScreen({ userChoice, onGameOver }) {
   const initialGuess = generateRandomBetween(1, 100, userChoice);
   const [currentGuess, setCurrentGuess] = useState(initialGuess);
+  const [rounds, setRounds] = useState([initialGuess]);
 
   useEffect(() => {
     if (currentGuess === userChoice) {
       onGameOver();
     }
   }, [currentGuess, userChoice, onGameOver]);
+
+  useEffect(() => {
+    min = 1;
+    max = 100;
+  }, []);
 
   function nextGuessHandler(direction) {
     if (
@@ -48,6 +54,7 @@ function GameScreen({ userChoice, onGameOver }) {
     }
     const newRndNum = generateRandomBetween(min, max, currentGuess);
     setCurrentGuess(newRndNum);
+    setRounds(prevRounds => [newRndNum, ...prevRounds]);
   }
 
   return (
@@ -60,14 +67,20 @@ function GameScreen({ userChoice, onGameOver }) {
         </InstructionText>
         <View style={styles.buttonsContainer}>
           <PrimaryButton onPress={nextGuessHandler.bind(null, "lower")}>
-            <Ionicons name="md-remove" size={24} color={"#fff"}/>
+            <Ionicons name="md-remove" size={24} color={"#fff"} />
           </PrimaryButton>
           <PrimaryButton onPress={nextGuessHandler.bind(null, "greater")}>
-            <Ionicons name="md-add" size={24} color={"#fff"}/>
+            <Ionicons name="md-add" size={24} color={"#fff"} />
           </PrimaryButton>
         </View>
       </Card>
-      {/* <View>Log Rounds</View> */}
+      <View>
+        <FlatList
+          data={rounds}
+          renderItem={itemData => <Text>{itemData.item}</Text>}
+          keyExtractor={item => item}
+        />
+      </View>
     </View>
   );
 }
