@@ -41,8 +41,9 @@ export default function App() {
     );
   }
 
-  function gameOverHandler() {
+  function gameOverHandler(numberOfRounds) {
     setGameIsOver(true);
+    setRoundsNumber(numberOfRounds);
   }
 
   if (gameIsOver && userNumber) {
